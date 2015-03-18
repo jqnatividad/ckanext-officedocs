@@ -24,7 +24,7 @@ To install ckanext-officedocs:
      cd ckanext-officedocs
      python setup.py install
 
-3. Add ``officedocs`` to the ``ckan.plugins`` setting in your CKAN
+3. Add ``officedocs_view`` to the ``ckan.plugins`` setting in your CKAN
    config file (by default the config file is located at
    ``/etc/ckan/default/production.ini``).
 
