@@ -19,7 +19,7 @@ To install ckanext-officedocs:
 
      . /usr/lib/ckan/default/bin/activate
 
-3. Install the ckanext-gdoc Python package into your virtual environment::
+3. Install the ckanext-officedocs Python package into your virtual environment::
 
      cd ckanext-officedocs
      python setup.py install
