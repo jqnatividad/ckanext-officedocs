@@ -29,7 +29,11 @@ class OfficeDocsPlugin(plugins.SingletonPlugin):
         }
 
     def can_view(self, data_dict):
-        return data_dict['resource']['format'].lower() in ['doc', 'pdf', 'xls', 'xlsx']
+        supported_formats = [
+            "JPEG", "PNG", "GIF", "BMP", "DOC", "DOCX", "XLS", "XLSX", "PPT", "PPTX"
+            "PDF", "TIFF", "DXF", "SVG", "XPS", "ZIP", "RAR", "TAR", "GZIP"
+        ]
+        return data_dict['resource']['format'].upper() in supported_formats
 
     def view_template(self, context, data_dict):
         return "officedocs/preview.html"

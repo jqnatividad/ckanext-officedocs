@@ -5,6 +5,14 @@ ckanext-officedocs
 This plugin provides the option of using the Microsoft Office viewer for
 previewing content as an IResourceView
 
+------------
+Supported formats
+------------
+
+This plugin will attempt to preview the following formats
+
+    "JPEG", "PNG", "GIF", "BMP", "DOC", "DOCX", "XLS", "XLSX", "PPT", "PPTX"
+    "PDF", "TIFF", "DXF", "SVG", "XPS", "ZIP", "RAR", "TAR", "GZIP"
 
 ------------
 Installation
