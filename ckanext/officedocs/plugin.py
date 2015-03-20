@@ -30,8 +30,7 @@ class OfficeDocsPlugin(plugins.SingletonPlugin):
 
     def can_view(self, data_dict):
         supported_formats = [
-            "JPEG", "PNG", "GIF", "BMP", "DOC", "DOCX", "XLS", "XLSX", "PPT", "PPTX"
-            "PDF", "TIFF", "DXF", "SVG", "XPS", "ZIP", "RAR", "TAR", "GZIP"
+            "DOC", "DOCX", "XLS", "XLSX", "PPT", "PPTX"
         ]
         return data_dict['resource']['format'].upper() in supported_formats
 

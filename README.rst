@@ -11,8 +11,7 @@ Supported formats
 
 This plugin will attempt to preview the following formats
 
-    "JPEG", "PNG", "GIF", "BMP", "DOC", "DOCX", "XLS", "XLSX", "PPT", "PPTX"
-    "PDF", "TIFF", "DXF", "SVG", "XPS", "ZIP", "RAR", "TAR", "GZIP"
+    "DOC", "DOCX", "XLS", "XLSX", "PPT", "PPTX"
 
 ------------
 Installation
