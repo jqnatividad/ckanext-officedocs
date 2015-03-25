@@ -11,7 +11,7 @@ Supported formats
 
 This plugin will attempt to preview the following formats
 
-    "DOC", "DOCX", "XLS", "XLSX", "PPT", "PPTX"
+    "DOC", "DOCX", "XLS", "XLSX", "PPT", "PPTX", "PPS"
 
 ------------
 Installation
