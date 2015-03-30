@@ -3,7 +3,7 @@ ckanext-officedocs
 =============
 
 This plugin provides the option of using the Microsoft Office viewer for
-previewing content as an IResourceView
+previewing both MS Office and OpenOffice documents as an IResourceView
 
 ------------
 Supported formats
@@ -11,7 +11,7 @@ Supported formats
 
 This plugin will attempt to preview the following formats
 
-    "DOC", "DOCX", "XLS", "XLSX", "PPT", "PPTX", "PPS"
+    "DOC", "DOCX", "XLS", "XLSX", "PPT", "PPTX", "PPS", "ODT", "ODS", "ODP"
 
 ------------
 Installation

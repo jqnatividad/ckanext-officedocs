@@ -14,7 +14,7 @@ class OfficeDocsPlugin(plugins.SingletonPlugin):
     def info(self):
         return {
             "name": "officedocs_view",
-            "title": toolkit._('Microsoft Office Previewer'),
+            "title": toolkit._('Office Previewer'),
             "default_title": toolkit._('Preview'),
             "icon": "compass",
             "always_available": True,
@@ -30,7 +30,7 @@ class OfficeDocsPlugin(plugins.SingletonPlugin):
 
     def can_view(self, data_dict):
         supported_formats = [
-            "DOC", "DOCX", "XLS", "XLSX", "PPT", "PPTX", "PPS"
+            "DOC", "DOCX", "XLS", "XLSX", "PPT", "PPTX", "PPS", "ODT", "ODS", "ODP"
         ]
         return data_dict['resource']['format'].upper() in supported_formats
 
