@@ -39,3 +39,11 @@ To install ckanext-officedocs:
 
      sudo service apache2 reload
 
+
+------------
+FAQ
+------------
+Q: It doesn't work, my documents aren't previewing
+
+A: For this extension to work, the documents to be previewed must be accessible to the
+wider internet, and will only work if you use a hostname, and not just an IP address.
