@@ -32,7 +32,10 @@ class OfficeDocsPlugin(plugins.SingletonPlugin):
         supported_formats = [
             "DOC", "DOCX", "XLS", "XLSX", "PPT", "PPTX", "PPS", "ODT", "ODS", "ODP"
         ]
-        return data_dict['resource']['format'].upper() in supported_formats
+        try:
+            return data_dict['resource']['format'].upper() in supported_formats
+        except:
+            return False
 
     def view_template(self, context, data_dict):
         return "officedocs/preview.html"
