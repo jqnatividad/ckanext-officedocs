@@ -33,7 +33,6 @@ class OfficeDocsPlugin(plugins.SingletonPlugin):
             "DOC", "DOCX", "XLS", "XLSX", "PPT", "PPTX", "PPS", "ODT", "ODS", "ODP"
         ]
         try:
-            return data_dict['resource']['format'].upper() in supported_formats
             return data_dict['resource'].get('format', '').upper() in supported_formats
         except:
             return False
