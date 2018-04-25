@@ -24,8 +24,10 @@ class OfficeDocsPlugin(plugins.SingletonPlugin):
     def setup_template_variables(self, context, data_dict):
         from urllib import quote_plus
         url = quote_plus(data_dict["resource"]["url"])
+        private_visibility = data_dict["package"]["private"]
         return {
-            "resource_url": url
+            "resource_url": url,
+            "visibility": private_visibility
         }
 
     def can_view(self, data_dict):

@@ -1,3 +1,6 @@
+{% if visibility %}
+<div>This resource view will render once the dataset is made public. Microsoft Office preview is unable to access and display private resources.</div>
+{% else %}
 <button id="fullscreeniframe" class="btn" style="position:absolute; right:5px; top:20px">Fullscreen</button>
 <iframe id="cvframe" src="//view.officeapps.live.com/op/view.aspx?src={{resource_url}}" frameborder="0" allowfullscreen="" width="100%" height="400px"></iframe>
 <script>
@@ -41,3 +44,4 @@
         }, false);
     })(this, this.document);
 </script>
+{% endif %}
