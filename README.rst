@@ -31,11 +31,17 @@ To install ckanext-officedocs:
      cd ckanext-officedocs
      python setup.py install
 
-3. Add ``officedocs_view`` to the ``ckan.plugins`` setting in your CKAN
+4. Add ``officedocs_view`` to the ``ckan.plugins`` setting in your CKAN
    config file (by default the config file is located at
    ``/etc/ckan/default/production.ini``).
+   
+5. If you wish for views to be created automatically for you, then you should 
+   add ``officedocs_view`` to the end of the ``ckan.views.default_views`` option in your 
+   config file.
 
-4. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu::
+      ckan.views.default_views = ... officedocs_view
+
+6. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu::
 
      sudo service apache2 reload
 
