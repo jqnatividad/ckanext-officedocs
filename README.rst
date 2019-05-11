@@ -2,7 +2,7 @@
 ckanext-officedocs
 =============
 
-This plugin provides the option of using the Microsoft Office viewer for
+This plugin provides the option of using the [Microsoft Online Doc Viewer](https://products.office.com/en/office-online/view-office-documents-online) for
 previewing both MS Office and OpenOffice documents as an IResourceView
 
 ------------
