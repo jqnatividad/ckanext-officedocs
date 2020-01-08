@@ -1,10 +1,18 @@
-import ckan.plugins as plugins
+from __future__ import absolute_import
+from future import standard_library
+
+standard_library.install_aliases()
+
+import ckan.lib.helpers as h
+import ckan.plugins as p
 import ckan.plugins.toolkit as toolkit
 
+from urllib import quote_plus
 
-class OfficeDocsPlugin(plugins.SingletonPlugin):
-    plugins.implements(plugins.IConfigurer)
-    plugins.implements(plugins.IResourceView)
+
+class OfficeDocsPlugin(p.SingletonPlugin):
+    p.implements(p.IConfigurer)
+    p.implements(p.IResourceView)
 
     def update_config(self, config_):
         toolkit.add_template_directory(config_, 'templates')
@@ -22,7 +30,6 @@ class OfficeDocsPlugin(plugins.SingletonPlugin):
         }
 
     def setup_template_variables(self, context, data_dict):
-        from urllib import quote_plus
         url = quote_plus(data_dict["resource"]["url"])
         return {
             "resource_url": url
@@ -30,10 +37,13 @@ class OfficeDocsPlugin(plugins.SingletonPlugin):
 
     def can_view(self, data_dict):
         supported_formats = [
-            "DOC", "DOCX", "XLS", "XLSX", "PPT", "PPTX", "PPS", "ODT", "ODS", "ODP"
+            "DOC", "DOCX", "XLS",
+            "XLSX", "PPT", "PPTX",
+            "PPS", "ODT", "ODS", "ODP"
         ]
         try:
-            return data_dict['resource'].get('format', '').upper() in supported_formats
+            res = data_dict['resource'].get('format', '').upper()
+            return res in supported_formats
         except:
             return False
 
