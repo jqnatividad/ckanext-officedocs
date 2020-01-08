@@ -1,11 +1,11 @@
 from __future__ import absolute_import
+
+import ckan.plugins as p
+import ckan.plugins.toolkit as toolkit
+
 from future import standard_library
 
 standard_library.install_aliases()
-
-import ckan.lib.helpers as h
-import ckan.plugins as p
-import ckan.plugins.toolkit as toolkit
 
 from urllib import quote_plus
 
@@ -44,7 +44,7 @@ class OfficeDocsPlugin(p.SingletonPlugin):
         try:
             res = data_dict["resource"].get("format", "").upper()
             return res in supported_formats
-        except:
+        except KeyError:
             return False
 
     def view_template(self, context, data_dict):
