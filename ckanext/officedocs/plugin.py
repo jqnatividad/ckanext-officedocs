@@ -15,15 +15,15 @@ class OfficeDocsPlugin(p.SingletonPlugin):
     p.implements(p.IResourceView)
 
     def update_config(self, config_):
-        toolkit.add_template_directory(config_, 'templates')
-        toolkit.add_public_directory(config_, 'public')
-        toolkit.add_resource('fanstatic', 'officedocs')
+        toolkit.add_template_directory(config_, "templates")
+        toolkit.add_public_directory(config_, "public")
+        toolkit.add_resource("fanstatic", "officedocs")
 
     def info(self):
         return {
             "name": "officedocs_view",
-            "title": toolkit._('Office Previewer'),
-            "default_title": toolkit._('Preview'),
+            "title": toolkit._("Office Previewer"),
+            "default_title": toolkit._("Preview"),
             "icon": "compass",
             "always_available": True,
             "iframed": False,
@@ -42,7 +42,7 @@ class OfficeDocsPlugin(p.SingletonPlugin):
             "PPS", "ODT", "ODS", "ODP"
         ]
         try:
-            res = data_dict['resource'].get('format', '').upper()
+            res = data_dict["resource"].get("format", "").upper()
             return res in supported_formats
         except:
             return False
