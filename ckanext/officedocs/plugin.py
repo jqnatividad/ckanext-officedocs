@@ -1,11 +1,8 @@
 from __future__ import absolute_import
-from future import standard_library
-
-standard_library.install_aliases()
 
 import ckan.lib.helpers as h
 import ckan.plugins as p
-import ckan.plugins.toolkit as toolkit
+import ckan.plugins.toolkit as tk
 
 from six.moves.urllib.parse import quote_plus
 
@@ -15,15 +12,15 @@ class OfficeDocsPlugin(p.SingletonPlugin):
     p.implements(p.IResourceView)
 
     def update_config(self, config_):
-        toolkit.add_template_directory(config_, "templates")
-        toolkit.add_public_directory(config_, "public")
-        toolkit.add_resource("fanstatic", "officedocs")
+        tk.add_template_directory(config_, "templates")
+        tk.add_public_directory(config_, "public")
+        tk.add_resource("fanstatic", "officedocs")
 
     def info(self):
         return {
             "name": "officedocs_view",
-            "title": toolkit._("Office Previewer"),
-            "default_title": toolkit._("Preview"),
+            "title": tk._("Office Previewer"),
+            "default_title": tk._("Preview"),
             "icon": "compass",
             "always_available": True,
             "iframed": False,
