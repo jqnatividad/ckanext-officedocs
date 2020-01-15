@@ -1,1 +1,1 @@
-six==1.11.0
+six>=1.10.0 #pytest has requirement six>=1.10.0

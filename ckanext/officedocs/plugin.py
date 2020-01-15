@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 import ckan.lib.helpers as h
 import ckan.plugins as p
 import ckan.plugins.toolkit as tk
