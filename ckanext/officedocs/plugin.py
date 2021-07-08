@@ -1,5 +1,6 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
+from six.moves.urllib.parse import quote_plus
 
 
 class OfficeDocsPlugin(plugins.SingletonPlugin):
@@ -22,7 +23,6 @@ class OfficeDocsPlugin(plugins.SingletonPlugin):
         }
 
     def setup_template_variables(self, context, data_dict):
-        from urllib import quote_plus
         url = quote_plus(data_dict["resource"]["url"])
         private_package = data_dict["package"]["private"]
         return {
@@ -34,10 +34,10 @@ class OfficeDocsPlugin(plugins.SingletonPlugin):
         supported_formats = [
             "DOC", "DOCX", "XLS", "XLSX", "PPT", "PPTX", "PPS", "ODT", "ODS", "ODP"
         ]
-        try:
-            return data_dict['resource'].get('format', '').upper() in supported_formats
-        except:
-            return False
+        format_upper = data_dict['resource'].get('format', '').upper()
+        if format_upper in supported_formats:
+            return True
+        return False
 
     def view_template(self, context, data_dict):
         return "officedocs/preview.html"
