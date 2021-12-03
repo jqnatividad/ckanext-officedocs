@@ -2,7 +2,7 @@
 ckanext-officedocs
 =============
 
-This plugin provides the option of using the `Microsoft Online Doc Viewer <https://products.office.com/en/office-online/view-office-documents-online>`_ for
+This plugin provides the option of using the `Microsoft Office Web Viewer <https://www.microsoft.com/en-us/microsoft-365/blog/2013/04/10/office-web-viewer-view-office-documents-in-a-browser/>`_ for
 previewing both MS Office and OpenOffice documents as an IResourceView
 
 ------------
@@ -44,6 +44,10 @@ To install ckanext-officedocs:
 6. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu::
 
      sudo service apache2 reload
+
+or if you're using `supervisor`:
+
+     sudo supervisorctl restart ckan-uwsgi:*
 
 
 ------------
