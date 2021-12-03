@@ -1,28 +1,30 @@
-import ckan.plugins as plugins
-import ckan.plugins.toolkit as toolkit
+import ckan.lib.helpers as h
+import ckan.plugins as p
+import ckan.plugins.toolkit as tk
+
+from six.moves.urllib.parse import quote_plus
 
 
-class OfficeDocsPlugin(plugins.SingletonPlugin):
-    plugins.implements(plugins.IConfigurer)
-    plugins.implements(plugins.IResourceView)
+class OfficeDocsPlugin(p.SingletonPlugin):
+    p.implements(p.IConfigurer)
+    p.implements(p.IResourceView)
 
     def update_config(self, config_):
-        toolkit.add_template_directory(config_, 'templates')
-        toolkit.add_public_directory(config_, 'public')
-        toolkit.add_resource('fanstatic', 'officedocs')
+        tk.add_template_directory(config_, "templates")
+        tk.add_public_directory(config_, "public")
+        tk.add_resource("fanstatic", "officedocs")
 
     def info(self):
         return {
             "name": "officedocs_view",
-            "title": toolkit._('Office Previewer'),
-            "default_title": toolkit._('Preview'),
+            "title": tk._("Office Previewer"),
+            "default_title": tk._("Preview"),
             "icon": "compass",
             "always_available": True,
             "iframed": False,
         }
 
     def setup_template_variables(self, context, data_dict):
-        from urllib import quote_plus
         url = quote_plus(data_dict["resource"]["url"])
         return {
             "resource_url": url
@@ -30,10 +32,13 @@ class OfficeDocsPlugin(plugins.SingletonPlugin):
 
     def can_view(self, data_dict):
         supported_formats = [
-            "DOC", "DOCX", "XLS", "XLSX", "PPT", "PPTX", "PPS", "ODT", "ODS", "ODP"
+            "DOC", "DOCX", "XLS",
+            "XLSX", "PPT", "PPTX",
+            "PPS", "ODT", "ODS", "ODP"
         ]
         try:
-            return data_dict['resource'].get('format', '').upper() in supported_formats
+            res = data_dict["resource"].get("format", "").upper()
+            return res in supported_formats
         except:
             return False
 
