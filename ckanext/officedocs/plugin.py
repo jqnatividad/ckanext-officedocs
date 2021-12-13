@@ -32,9 +32,9 @@ class OfficeDocsPlugin(p.SingletonPlugin):
 
     def can_view(self, data_dict):
         supported_formats = [
-            "DOC", "DOCX", "XLS",
-            "XLSX", "PPT", "PPTX",
-            "PPS", "ODT", "ODS", "ODP"
+            "DOC", "DOCX", "XLS", "CSV",
+            "XLSX", "XLSB", "PPT", "PPTX",
+            "PPS", "PPSX", "ODT", "ODS", "ODP"
         ]
         try:
             res = data_dict["resource"].get("format", "").upper()
