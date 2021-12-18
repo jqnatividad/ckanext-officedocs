@@ -19,7 +19,7 @@ class OfficeDocsPlugin(p.SingletonPlugin):
             "name": "officedocs_view",
             "title": tk._("Office Previewer"),
             "default_title": tk._("Preview"),
-            "icon": "microsoft",
+            "icon": "windows",
             "always_available": False,
             "iframed": False,
         }
