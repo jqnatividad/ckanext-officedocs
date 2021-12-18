@@ -32,7 +32,7 @@ class OfficeDocsPlugin(p.SingletonPlugin):
 
     def can_view(self, data_dict):
         supported_formats = [
-            "DOC", "DOCX", "XLS", "CSV",
+            "DOC", "DOCX", "XLS",
             "XLSX", "XLSB", "PPT", "PPTX",
             "PPS", "PPSX", "ODT", "ODS", "ODP"
         ]
