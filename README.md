@@ -9,8 +9,8 @@ IResourceView
 
 This plugin will attempt to preview the following formats
 
-> \"DOC\", \"DOCX\", \"XLS\", \"XLSX\", \"PPT\", \"PPTX\", \"PPS\",
-> \"ODT\", \"ODS\", \"ODP\"
+> \"DOC\", \"DOCX\", \"XLS\", \"XLSX\", \"XLSB\", \"PPT\", \"PPTX\", \"PPS\",
+> \"PPSX\", \"ODT\", \"ODS\", \"ODP\"
 
 ## Installation
 
@@ -53,5 +53,5 @@ To install ckanext-officedocs:
 Q: It doesn\'t work, my documents aren\'t previewing
 
 A: For this extension to work, the documents to be previewed must be
-accessible to the wider internet, and will only work if you use a
-hostname, and not just an IP address.
+accessible to the wider internet (i.e. the Dataset Package is PUBLIC, not PRIVATE), 
+and will only work if you use a hostname, and not just an IP address.
