@@ -19,8 +19,8 @@ class OfficeDocsPlugin(p.SingletonPlugin):
             "name": "officedocs_view",
             "title": tk._("Office Previewer"),
             "default_title": tk._("Preview"),
-            "icon": "compass",
-            "always_available": True,
+            "icon": "microsoft",
+            "always_available": False,
             "iframed": False,
         }
 
@@ -37,8 +37,12 @@ class OfficeDocsPlugin(p.SingletonPlugin):
             "PPS", "PPSX", "ODT", "ODS", "ODP"
         ]
         try:
-            res = data_dict["resource"].get("format", "").upper()
-            return res in supported_formats
+            pkg_private = data_dict["package"].get("private", False)
+            if not pkg_private:
+                res = data_dict["resource"].get("format", "").upper()
+                return res in supported_formats
+            else:
+                return False
         except:
             return False
 
