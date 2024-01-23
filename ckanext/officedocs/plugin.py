@@ -43,7 +43,7 @@ class OfficeDocsPlugin(p.SingletonPlugin):
                 return res in supported_formats
             else:
                 return False
-        except:
+        except KeyError:
             return False
 
     def view_template(self, context, data_dict):
