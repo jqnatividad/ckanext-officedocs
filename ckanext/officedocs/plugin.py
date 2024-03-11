@@ -37,13 +37,13 @@ class OfficeDocsPlugin(p.SingletonPlugin):
             "PPS", "PPSX", "ODT", "ODS", "ODP"
         ]
         try:
-            pkg_private = data_dict["package"].get("private", False)
+            pkg_private = data_dict.get("package",{}).get("private", False)
             if not pkg_private:
-                res = data_dict["resource"].get("format", "").upper()
+                res = data_dict.get("resource",{}).get("format", "").upper()
                 return res in supported_formats
             else:
                 return False
-        except:
+        except Exception:
             return False
 
     def view_template(self, context, data_dict):
