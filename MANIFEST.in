@@ -1,2 +1,2 @@
-include README.rst
+include README.md
 recursive-include ckanext/officedocs *.html *.json *.js *.less *.css

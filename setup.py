@@ -5,7 +5,7 @@ from os import path
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the relevant file
-with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
@@ -14,7 +14,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # http://packaging.python.org/en/latest/tutorial.html#version
-    version='0.0.1',
+    version='1.1.0',
 
     description='''A ResourceView that uses Microsoft's Doc preview''',
     long_description=long_description,
@@ -23,8 +23,8 @@ setup(
     url='https://github.com/rossjones/ckanext-officedocs',
 
     # Author details
-    author='''Ross Jones''',
-    author_email='''ross@servercode.co.uk''',
+    author='''Ross Jones, Joel Natividad''',
+    author_email='''ross@servercode.co.uk, joel@dathere.com''',
 
     # Choose your license
     license='AGPL',
@@ -35,15 +35,15 @@ setup(
         # 3 - Alpha
         # 4 - Beta
         # 5 - Production/Stable
-        'Development Status :: 4 - Beta',
+        'Production/Stable :: 5',
 
         # Pick your license as you wish (should match "license" above)
         'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
 
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.8',
     ],
 
 
