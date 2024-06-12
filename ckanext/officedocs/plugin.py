@@ -1,24 +1,26 @@
-import ckan.plugins as plugins
-import ckan.plugins.toolkit as toolkit
+import ckan.lib.helpers as h
+import ckan.plugins as p
+import ckan.plugins.toolkit as tk
+
 from six.moves.urllib.parse import quote_plus
 
 
-class OfficeDocsPlugin(plugins.SingletonPlugin):
-    plugins.implements(plugins.IConfigurer)
-    plugins.implements(plugins.IResourceView)
+class OfficeDocsPlugin(p.SingletonPlugin):
+    p.implements(p.IConfigurer)
+    p.implements(p.IResourceView)
 
     def update_config(self, config_):
-        toolkit.add_template_directory(config_, 'templates')
-        toolkit.add_public_directory(config_, 'public')
-        toolkit.add_resource('fanstatic', 'officedocs')
+        tk.add_template_directory(config_, "templates")
+        tk.add_public_directory(config_, "public")
+        tk.add_resource("fanstatic", "officedocs")
 
     def info(self):
         return {
             "name": "officedocs_view",
-            "title": toolkit._('Office Previewer'),
-            "default_title": toolkit._('Preview'),
-            "icon": "compass",
-            "always_available": True,
+            "title": tk._("Office Previewer"),
+            "default_title": tk._("Preview"),
+            "icon": "windows",
+            "always_available": False,
             "iframed": False,
         }
 
@@ -32,12 +34,19 @@ class OfficeDocsPlugin(plugins.SingletonPlugin):
 
     def can_view(self, data_dict):
         supported_formats = [
-            "DOC", "DOCX", "XLS", "XLSX", "PPT", "PPTX", "PPS", "ODT", "ODS", "ODP"
+            "DOC", "DOCX", "XLS",
+            "XLSX", "XLSB", "PPT", "PPTX",
+            "PPS", "PPSX", "ODT", "ODS", "ODP"
         ]
-        format_upper = data_dict['resource'].get('format', '').upper()
-        if format_upper in supported_formats:
-            return True
-        return False
+        try:
+            pkg_private = data_dict.get("package",{}).get("private", False)
+            if not pkg_private:
+                res = data_dict.get("resource",{}).get("format", "").upper()
+                return res in supported_formats
+            else:
+                return False
+        except Exception:
+            return False
 
     def view_template(self, context, data_dict):
         return "officedocs/preview.html"
