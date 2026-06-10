@@ -5,6 +5,22 @@ import ckan.plugins.toolkit as tk
 from six.moves.urllib.parse import quote_plus
 
 
+SUPPORTED_FORMATS_CONFIG = "ckanext.officedocs.supported_formats"
+DEFAULT_SUPPORTED_FORMATS = (
+    "DOC DOCX XLS XLSX XLSB PPT PPTX PPS PPSX ODT ODS ODP"
+)
+
+
+def get_supported_formats():
+    value = tk.config.get(
+        SUPPORTED_FORMATS_CONFIG, DEFAULT_SUPPORTED_FORMATS
+    )
+    return [
+        format_.upper()
+        for format_ in tk.aslist(value)
+    ]
+
+
 class OfficeDocsPlugin(p.SingletonPlugin):
     p.implements(p.IConfigurer)
     p.implements(p.IResourceView)
@@ -33,16 +49,11 @@ class OfficeDocsPlugin(p.SingletonPlugin):
         }
 
     def can_view(self, data_dict):
-        supported_formats = [
-            "DOC", "DOCX", "XLS",
-            "XLSX", "XLSB", "PPT", "PPTX",
-            "PPS", "PPSX", "ODT", "ODS", "ODP"
-        ]
         try:
             pkg_private = data_dict.get("package",{}).get("private", False)
             if not pkg_private:
                 res = data_dict.get("resource",{}).get("format", "").upper()
-                return res in supported_formats
+                return res in get_supported_formats()
             else:
                 return False
         except Exception:

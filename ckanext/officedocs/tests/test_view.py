@@ -1,6 +1,12 @@
 import ckan.plugins as p
 from ckan.tests import factories
 
+from ckanext.officedocs.plugin import (
+    OfficeDocsPlugin,
+    SUPPORTED_FORMATS_CONFIG,
+)
+
+
 def test_view_on_resource_page():
     sysadmin = factories.Sysadmin()
     dataset = factories.Dataset()
@@ -22,3 +28,34 @@ def test_view_on_resource_page():
 
     assert response.get('title') == 'Preview'
     assert response.get('view_type') == 'officedocs_view'
+
+
+def test_can_view_uses_default_supported_formats(monkeypatch, ckan_config):
+    monkeypatch.delitem(
+        ckan_config, SUPPORTED_FORMATS_CONFIG, raising=False
+    )
+
+    assert OfficeDocsPlugin().can_view({
+        "package": {"private": False},
+        "resource": {"format": "docx"},
+    })
+
+
+def test_can_view_uses_configured_supported_formats(
+    monkeypatch, ckan_config
+):
+    monkeypatch.setitem(
+        ckan_config,
+        SUPPORTED_FORMATS_CONFIG,
+        "docm xlsm PPTM ppsm",
+    )
+    plugin = OfficeDocsPlugin()
+
+    assert plugin.can_view({
+        "package": {"private": False},
+        "resource": {"format": "DoCm"},
+    })
+    assert not plugin.can_view({
+        "package": {"private": False},
+        "resource": {"format": "DOCX"},
+    })
