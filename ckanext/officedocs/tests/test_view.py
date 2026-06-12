@@ -1,3 +1,5 @@
+import pytest
+
 import ckan.plugins as p
 from ckan.tests import factories
 
@@ -9,6 +11,8 @@ from ckanext.officedocs.plugin import (
 )
 
 
+@pytest.mark.ckan_config("ckan.plugins", "officedocs_view")
+@pytest.mark.usefixtures("with_plugins")
 def test_view_on_resource_page():
     sysadmin = factories.Sysadmin()
     dataset = factories.Dataset()
