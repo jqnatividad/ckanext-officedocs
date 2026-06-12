@@ -1,5 +1,39 @@
 {% if private_package %}
-<div style="text-align:center;">This resource view will render once the dataset is made public. Microsoft Office preview is unable to access and display private resources.</div>
+<div id="officedocs-private-fallback" style="text-align:center; padding:20px;">
+  <div id="officedocs-chromium-fallback" style="display:none;">
+    <p>Microsoft's online viewer cannot reach private resources, but your browser can.</p>
+    <p>
+      <a id="officedocs-open-doc" class="btn btn-primary" href="{{ resource_download_url }}" target="_blank" rel="noopener">Open document</a>
+    </p>
+    <p style="margin-top:10px;">
+      Tip: install a Chromium Office viewer extension to render Office files in your browser &mdash;
+      <a href="https://chromewebstore.google.com/detail/office/ndjpnladcallmjemlbaebfadecfhkepb" target="_blank" rel="noopener">Office</a>
+      or
+      <a href="https://chromewebstore.google.com/detail/office-editing-for-docs-s/gbkeegbaiigmenfmjfclcdgdpimamgkj" target="_blank" rel="noopener">Office Editing for Docs, Sheets &amp; Slides</a>.
+    </p>
+  </div>
+  <div id="officedocs-other-fallback">
+    <p>This resource is private, so Microsoft's online viewer is unable to access and display it.</p>
+    <p>To preview private Office files, use a Chromium-based browser (Chrome, Edge, Brave, Opera) with an Office viewer extension installed.</p>
+  </div>
+</div>
+<script>
+(function(window, document){
+  function isChromium() {
+    var uaData = window.navigator.userAgentData;
+    if (uaData && Array.isArray(uaData.brands)) {
+      return uaData.brands.some(function(b){ return b.brand === "Chromium"; });
+    }
+    var ua = window.navigator.userAgent;
+    if (/Firefox\//.test(ua)) { return false; }
+    return /Chrome\/|Chromium\/|Edg\/|OPR\//.test(ua);
+  }
+  if (isChromium()) {
+    document.getElementById("officedocs-chromium-fallback").style.display = "block";
+    document.getElementById("officedocs-other-fallback").style.display = "none";
+  }
+})(this, this.document);
+</script>
 {% else %}
 <button id="fullscreeniframe" class="btn" style="position:absolute; right:5px; top:20px">Fullscreen</button>
 <iframe id="cvframe" src="//view.officeapps.live.com/op/view.aspx?src={{resource_url}}" frameborder="0" allowfullscreen="" width="100%" height="400px"></iframe>

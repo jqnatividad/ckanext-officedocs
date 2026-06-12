@@ -10,6 +10,9 @@ DEFAULT_SUPPORTED_FORMATS = (
     "DOC DOCX XLS XLSX XLSB PPT PPTX PPS PPSX ODT ODS ODP"
 )
 
+PRIVATE_FALLBACK_CONFIG = "ckanext.officedocs.enable_private_fallback"
+DEFAULT_PRIVATE_FALLBACK = False
+
 
 def get_supported_formats():
     value = tk.config.get(
@@ -19,6 +22,12 @@ def get_supported_formats():
         format_.upper()
         for format_ in tk.aslist(value)
     ]
+
+
+def private_fallback_enabled():
+    return tk.asbool(
+        tk.config.get(PRIVATE_FALLBACK_CONFIG, DEFAULT_PRIVATE_FALLBACK)
+    )
 
 
 class OfficeDocsPlugin(p.SingletonPlugin):
@@ -41,21 +50,23 @@ class OfficeDocsPlugin(p.SingletonPlugin):
         }
 
     def setup_template_variables(self, context, data_dict):
-        url = quote_plus(data_dict["resource"]["url"])
+        resource_url = data_dict["resource"]["url"]
         private_package = data_dict["package"]["private"]
         return {
-            "resource_url": url,
+            "resource_url": quote_plus(resource_url),
+            "resource_download_url": resource_url,
             "private_package": private_package
         }
 
     def can_view(self, data_dict):
         try:
-            pkg_private = data_dict.get("package",{}).get("private", False)
-            if not pkg_private:
-                res = data_dict.get("resource",{}).get("format", "").upper()
-                return res in get_supported_formats()
-            else:
+            res = data_dict.get("resource", {}).get("format", "").upper()
+            if res not in get_supported_formats():
                 return False
+            pkg_private = data_dict.get("package", {}).get("private", False)
+            if pkg_private:
+                return private_fallback_enabled()
+            return True
         except Exception:
             return False
 
