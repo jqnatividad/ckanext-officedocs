@@ -25,6 +25,33 @@ to add macro-enabled Microsoft Office formats:
 ckanext.officedocs.supported_formats = DOC DOCX DOCM XLS XLSX XLSM XLSB PPT PPTX PPTM PPS PPSX PPSM ODT ODS ODP
 ```
 
+## Private package fallback
+
+Microsoft's online viewer can only render resources that are publicly reachable,
+so by default the previewer is not offered for resources in private datasets.
+
+You can opt in to a client-side fallback for private resources:
+
+```ini
+ckanext.officedocs.enable_private_fallback = true
+```
+
+When enabled, private Office resources show a fallback panel instead of the
+online viewer:
+
+- On a Chromium-based browser (Chrome, Edge, Brave, Opera), the panel offers an
+  "Open document" link and suggests installing an Office viewer extension
+  ([Office](https://chromewebstore.google.com/detail/office/ndjpnladcallmjemlbaebfadecfhkepb)
+  or [Office Editing for Docs, Sheets & Slides](https://chromewebstore.google.com/detail/office-editing-for-docs-s/gbkeegbaiigmenfmjfclcdgdpimamgkj)).
+  With such an extension installed, opening the document renders it in the
+  browser using the viewer's own session, which can reach the private resource.
+- On other browsers (Firefox, Safari), the panel explains that previewing
+  private files requires a Chromium-based browser with one of those extensions.
+
+Note: browser extensions cannot be detected from a web page, so the fallback
+always shows the tip/link rather than auto-detecting whether an extension is
+present.
+
 ## Installation
 
 To install ckanext-officedocs:
@@ -65,6 +92,8 @@ To install ckanext-officedocs:
 
 Q: It doesn\'t work, my documents aren\'t previewing
 
-A: For this extension to work, the documents to be previewed must be
+A: For the Microsoft online viewer to work, the documents to be previewed must be
 accessible to the wider internet (i.e. the Dataset Package is PUBLIC, not PRIVATE), 
-and will only work if you use a hostname, and not just an IP address.
+and will only work if you use a hostname, and not just an IP address. To preview
+private resources, see the [Private package fallback](#private-package-fallback)
+section above.
