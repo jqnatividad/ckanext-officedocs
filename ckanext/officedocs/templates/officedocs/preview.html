@@ -36,7 +36,7 @@
 </script>
 {% else %}
 <button id="fullscreeniframe" class="btn" style="position:absolute; right:5px; top:20px">{{ _("Fullscreen") }}</button>
-<iframe id="cvframe" src="//view.officeapps.live.com/op/view.aspx?src={{ resource_url }}" frameborder="0" allowfullscreen="" width="100%" height="{{ iframe_height }}"></iframe>
+<iframe id="cvframe" src="//view.officeapps.live.com/op/view.aspx?src={{ resource_url }}" frameborder="0" allowfullscreen="" width="100%" style="height:{{ iframe_height }};"></iframe>
 <script>
 (function(window, document){
   var button = document.getElementById("fullscreeniframe");
