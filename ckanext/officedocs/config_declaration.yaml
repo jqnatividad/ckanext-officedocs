@@ -1,0 +1,26 @@
+version: 1
+groups:
+  - annotation: ckanext-officedocs settings
+    options:
+      - key: ckanext.officedocs.supported_formats
+        default: DOC DOCX XLS XLSX XLSB PPT PPTX PPS PPSX ODT ODS ODP
+        description: |
+          Space-separated list of resource formats (matched case-insensitively)
+          that the Office previewer will offer to render.
+        type: str
+
+      - key: ckanext.officedocs.enable_private_fallback
+        default: false
+        description: |
+          Offer a client-side fallback preview for resources in private
+          datasets. Microsoft's online viewer cannot reach private resources;
+          when enabled, Chromium-based browsers are shown an "Open document"
+          link plus a tip to install an Office viewer extension.
+        type: bool
+
+      - key: ckanext.officedocs.iframe_height
+        default: 400px
+        description: |
+          CSS height of the Office viewer iframe used for public resources
+          (e.g. "400px", "60vh").
+        type: str

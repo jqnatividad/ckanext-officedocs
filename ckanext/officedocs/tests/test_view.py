@@ -5,6 +5,7 @@ from ckanext.officedocs.plugin import (
     OfficeDocsPlugin,
     SUPPORTED_FORMATS_CONFIG,
     PRIVATE_FALLBACK_CONFIG,
+    IFRAME_HEIGHT_CONFIG,
 )
 
 
@@ -108,3 +109,42 @@ def test_can_view_private_fallback_still_checks_format(
         "package": {"private": True},
         "resource": {"format": "pdf"},
     })
+
+
+def test_setup_template_variables_encodes_url_and_sets_flags(ckan_config):
+    result = OfficeDocsPlugin().setup_template_variables({}, {
+        "resource": {"url": "http://example.com/my doc.docx"},
+        "package": {"private": True},
+    })
+
+    assert result["resource_url"] == "http%3A%2F%2Fexample.com%2Fmy+doc.docx"
+    assert result["resource_download_url"] == "http://example.com/my doc.docx"
+    assert result["private_package"] is True
+
+
+def test_setup_template_variables_handles_missing_keys(ckan_config):
+    result = OfficeDocsPlugin().setup_template_variables({}, {})
+
+    assert result["resource_url"] == ""
+    assert result["resource_download_url"] == ""
+    assert result["private_package"] is False
+
+
+def test_setup_template_variables_iframe_height_default(
+    monkeypatch, ckan_config
+):
+    monkeypatch.delitem(ckan_config, IFRAME_HEIGHT_CONFIG, raising=False)
+
+    result = OfficeDocsPlugin().setup_template_variables({}, {})
+
+    assert result["iframe_height"] == "400px"
+
+
+def test_setup_template_variables_iframe_height_configured(
+    monkeypatch, ckan_config
+):
+    monkeypatch.setitem(ckan_config, IFRAME_HEIGHT_CONFIG, "75vh")
+
+    result = OfficeDocsPlugin().setup_template_variables({}, {})
+
+    assert result["iframe_height"] == "75vh"

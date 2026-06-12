@@ -14,13 +14,14 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # http://packaging.python.org/en/latest/tutorial.html#version
-    version='1.2.0',
+    version='2.0.0',
 
     description='''A ResourceView that uses Microsoft's Doc preview''',
     long_description=long_description,
+    long_description_content_type='text/markdown',
 
     # The project's main homepage.
-    url='https://github.com/rossjones/ckanext-officedocs',
+    url='https://github.com/jqnatividad/ckanext-officedocs',
 
     # Author details
     author='''Ross Jones, Joel Natividad''',
@@ -40,11 +41,14 @@ setup(
         # Pick your license as you wish (should match "license" above)
         'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
 
-        # Specify the Python versions you support here. In particular, ensure
-        # that you indicate whether you support Python 2, Python 3 or both.
-        'Programming Language :: Python :: 2.7',
+        # Specify the Python versions you support here.
+        'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
     ],
+
+    python_requires='>=3.8',
 
 
     # What does your project relate to?
