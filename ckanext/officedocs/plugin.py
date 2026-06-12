@@ -1,8 +1,7 @@
-import ckan.lib.helpers as h
 import ckan.plugins as p
 import ckan.plugins.toolkit as tk
 
-from six.moves.urllib.parse import quote_plus
+from urllib.parse import quote_plus
 
 
 SUPPORTED_FORMATS_CONFIG = "ckanext.officedocs.supported_formats"
@@ -12,6 +11,9 @@ DEFAULT_SUPPORTED_FORMATS = (
 
 PRIVATE_FALLBACK_CONFIG = "ckanext.officedocs.enable_private_fallback"
 DEFAULT_PRIVATE_FALLBACK = False
+
+IFRAME_HEIGHT_CONFIG = "ckanext.officedocs.iframe_height"
+DEFAULT_IFRAME_HEIGHT = "400px"
 
 
 def get_supported_formats():
@@ -30,6 +32,11 @@ def private_fallback_enabled():
     )
 
 
+def get_iframe_height():
+    return tk.config.get(IFRAME_HEIGHT_CONFIG, DEFAULT_IFRAME_HEIGHT)
+
+
+@tk.blanket.config_declarations
 class OfficeDocsPlugin(p.SingletonPlugin):
     p.implements(p.IConfigurer)
     p.implements(p.IResourceView)
@@ -50,12 +57,14 @@ class OfficeDocsPlugin(p.SingletonPlugin):
         }
 
     def setup_template_variables(self, context, data_dict):
-        resource_url = data_dict["resource"]["url"]
-        private_package = data_dict["package"]["private"]
+        resource = data_dict.get("resource", {})
+        package = data_dict.get("package", {})
+        resource_url = resource.get("url", "")
         return {
             "resource_url": quote_plus(resource_url),
             "resource_download_url": resource_url,
-            "private_package": private_package
+            "private_package": package.get("private", False),
+            "iframe_height": get_iframe_height(),
         }
 
     def can_view(self, data_dict):

@@ -1,20 +1,20 @@
 {% if private_package %}
 <div id="officedocs-private-fallback" style="text-align:center; padding:20px;">
   <div id="officedocs-chromium-fallback" style="display:none;">
-    <p>Microsoft's online viewer cannot reach private resources, but your browser can.</p>
+    <p>{{ _("Microsoft's online viewer cannot reach private resources, but your browser can.") }}</p>
     <p>
-      <a id="officedocs-open-doc" class="btn btn-primary" href="{{ resource_download_url }}" target="_blank" rel="noopener">Open document</a>
+      <a id="officedocs-open-doc" class="btn btn-primary" href="{{ resource_download_url }}" target="_blank" rel="noopener">{{ _("Open document") }}</a>
     </p>
     <p style="margin-top:10px;">
-      Tip: install a Chromium Office viewer extension to render Office files in your browser &mdash;
+      {{ _("Tip: install a Chromium Office viewer extension to render Office files in your browser:") }}
       <a href="https://chromewebstore.google.com/detail/office/ndjpnladcallmjemlbaebfadecfhkepb" target="_blank" rel="noopener">Office</a>
-      or
+      {{ _("or") }}
       <a href="https://chromewebstore.google.com/detail/office-editing-for-docs-s/gbkeegbaiigmenfmjfclcdgdpimamgkj" target="_blank" rel="noopener">Office Editing for Docs, Sheets &amp; Slides</a>.
     </p>
   </div>
   <div id="officedocs-other-fallback">
-    <p>This resource is private, so Microsoft's online viewer is unable to access and display it.</p>
-    <p>To preview private Office files, use a Chromium-based browser (Chrome, Edge, Brave, Opera) with an Office viewer extension installed.</p>
+    <p>{{ _("This resource is private, so Microsoft's online viewer is unable to access and display it.") }}</p>
+    <p>{{ _("To preview private Office files, use a Chromium-based browser (Chrome, Edge, Brave, Opera) with an Office viewer extension installed.") }}</p>
   </div>
 </div>
 <script>
@@ -35,47 +35,28 @@
 })(this, this.document);
 </script>
 {% else %}
-<button id="fullscreeniframe" class="btn" style="position:absolute; right:5px; top:20px">Fullscreen</button>
-<iframe id="cvframe" src="//view.officeapps.live.com/op/view.aspx?src={{resource_url}}" frameborder="0" allowfullscreen="" width="100%" height="400px"></iframe>
+<button id="fullscreeniframe" class="btn" style="position:absolute; right:5px; top:20px">{{ _("Fullscreen") }}</button>
+<iframe id="cvframe" src="//view.officeapps.live.com/op/view.aspx?src={{ resource_url }}" frameborder="0" allowfullscreen="" width="100%" style="height:{{ iframe_height }};"></iframe>
 <script>
-// http://stackoverflow.com/questions/18901847/iframe-enter-fullscreen-mode
 (function(window, document){
-        var $ = function(selector,context){return(context||document).querySelector(selector)};
+  var button = document.getElementById("fullscreeniframe");
+  var iframe = document.getElementById("cvframe");
+  if (!button || !iframe) { return; }
 
-        var iframe = $("iframe"),
-            domPrefixes = 'Webkit Moz O ms Khtml'.split(' ');
+  var requestFullscreen = iframe.requestFullscreen
+    || iframe.webkitRequestFullscreen
+    || iframe.mozRequestFullScreen
+    || iframe.msRequestFullscreen;
 
-        var fullscreen = function(elem) {
-            var prefix;
-            // Mozilla and webkit intialise fullscreen slightly differently
-            for ( var i = -1, len = domPrefixes.length; ++i < len; ) {
-              prefix = domPrefixes[i].toLowerCase();
+  if (!requestFullscreen) {
+    // Browser doesn't support fullscreen; hide the control rather than failing.
+    button.style.display = "none";
+    return;
+  }
 
-              if ( elem[prefix + 'EnterFullScreen'] ) {
-                // Webkit uses EnterFullScreen for video
-                return prefix + 'EnterFullScreen';
-                break;
-              } else if( elem[prefix + 'RequestFullScreen'] ) {
-                // Mozilla uses RequestFullScreen for all elements and webkit uses it for non video elements
-                return prefix + 'RequestFullScreen';
-                break;
-              }
-            }
-
-            return false;
-        };
-        // Webkit uses "requestFullScreen" for non video elements
-        var fullscreenother = fullscreen(document.createElement("iframe"));
-
-        if(!fullscreen) {
-            alert("Fullscreen won't work, please make sure you're using a browser that supports it and you have enabled the feature");
-            return;
-        }
-
-        $("#fullscreeniframe").addEventListener("click", function(){
-            // iframe fullscreen and non video elements in webkit use request over enter
-            iframe[fullscreenother]();
-        }, false);
-    })(this, this.document);
+  button.addEventListener("click", function(){
+    requestFullscreen.call(iframe);
+  }, false);
+})(this, this.document);
 </script>
 {% endif %}

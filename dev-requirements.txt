@@ -1,1 +1,3 @@
-six>=1.10.0 #pytest has requirement six>=1.10.0
+# Test dependencies. CKAN's own dev-requirements provide pytest, factory-boy,
+# pytest-ckan, etc.; list only extras specific to this extension here.
+pytest-cov

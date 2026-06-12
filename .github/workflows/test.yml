@@ -1,0 +1,59 @@
+name: Tests
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install requirements
+        run: pip install flake8
+      - name: Check syntax
+        run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+
+  test:
+    needs: lint
+    strategy:
+      fail-fast: false
+      matrix:
+        ckan-version: ["2.10", "2.11"]
+    name: CKAN ${{ matrix.ckan-version }}
+    runs-on: ubuntu-latest
+    container:
+      image: ckan/ckan-dev:${{ matrix.ckan-version }}
+      # Run as root so actions/checkout can write to the runner's file-command
+      # dir; the ckan-dev:2.11 image otherwise runs as a non-root user (EACCES).
+      options: --user root
+    services:
+      solr:
+        image: ckan/ckan-solr:${{ matrix.ckan-version }}-solr9
+      postgres:
+        image: ckan/ckan-postgres-dev:${{ matrix.ckan-version }}
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      redis:
+        image: redis:3
+    env:
+      CKAN_SQLALCHEMY_URL: postgresql://ckan_default:pass@postgres/ckan_test
+      CKAN_DATASTORE_WRITE_URL: postgresql://datastore_write:pass@postgres/datastore_test
+      CKAN_DATASTORE_READ_URL: postgresql://datastore_read:pass@postgres/datastore_test
+      CKAN_SOLR_URL: http://solr:8983/solr/ckan
+      CKAN_REDIS_URL: redis://redis:6379/1
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install extension and test requirements
+        run: |
+          pip install -e .
+          pip install -r dev-requirements.txt
+          # Point test.ini at the CKAN core test config shipped in the container.
+          sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/' test.ini
+      - name: Setup database
+        run: ckan -c test.ini db init
+      - name: Run tests
+        run: pytest --ckan-ini=test.ini --cov=ckanext.officedocs --disable-warnings ckanext/officedocs

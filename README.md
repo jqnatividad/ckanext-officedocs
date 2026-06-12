@@ -52,6 +52,29 @@ Note: browser extensions cannot be detected from a web page, so the fallback
 always shows the tip/link rather than auto-detecting whether an extension is
 present.
 
+## Viewer height
+
+The height of the Office viewer iframe (used for public resources) is
+configurable:
+
+```ini
+ckanext.officedocs.iframe_height = 400px
+```
+
+Any valid CSS length is accepted (e.g. `600px`, `75vh`). Defaults to `400px`.
+
+## Configuration reference
+
+All options are declared via CKAN's config declaration, so you can inspect
+them with `ckan config declaration officedocs` and validate your config with
+`ckan config validate`.
+
+| Option | Default | Description |
+| --- | --- | --- |
+| `ckanext.officedocs.supported_formats` | `DOC DOCX XLS XLSX XLSB PPT PPTX PPS PPSX ODT ODS ODP` | Space-separated formats to preview (case-insensitive). |
+| `ckanext.officedocs.enable_private_fallback` | `false` | Enable the Chromium fallback preview for private resources. |
+| `ckanext.officedocs.iframe_height` | `400px` | CSS height of the public-resource viewer iframe. |
+
 ## Installation
 
 To install ckanext-officedocs:
