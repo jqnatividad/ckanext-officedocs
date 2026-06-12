@@ -4,6 +4,7 @@ from ckan.tests import factories
 from ckanext.officedocs.plugin import (
     OfficeDocsPlugin,
     SUPPORTED_FORMATS_CONFIG,
+    PRIVATE_FALLBACK_CONFIG,
 )
 
 
@@ -58,4 +59,52 @@ def test_can_view_uses_configured_supported_formats(
     assert not plugin.can_view({
         "package": {"private": False},
         "resource": {"format": "DOCX"},
+    })
+
+
+def test_can_view_public_supported_format(monkeypatch, ckan_config):
+    monkeypatch.delitem(
+        ckan_config, PRIVATE_FALLBACK_CONFIG, raising=False
+    )
+
+    assert OfficeDocsPlugin().can_view({
+        "package": {"private": False},
+        "resource": {"format": "docx"},
+    })
+
+
+def test_can_view_private_blocked_by_default(monkeypatch, ckan_config):
+    monkeypatch.delitem(
+        ckan_config, PRIVATE_FALLBACK_CONFIG, raising=False
+    )
+
+    assert not OfficeDocsPlugin().can_view({
+        "package": {"private": True},
+        "resource": {"format": "docx"},
+    })
+
+
+def test_can_view_private_allowed_when_fallback_enabled(
+    monkeypatch, ckan_config
+):
+    monkeypatch.setitem(
+        ckan_config, PRIVATE_FALLBACK_CONFIG, "true"
+    )
+
+    assert OfficeDocsPlugin().can_view({
+        "package": {"private": True},
+        "resource": {"format": "docx"},
+    })
+
+
+def test_can_view_private_fallback_still_checks_format(
+    monkeypatch, ckan_config
+):
+    monkeypatch.setitem(
+        ckan_config, PRIVATE_FALLBACK_CONFIG, "true"
+    )
+
+    assert not OfficeDocsPlugin().can_view({
+        "package": {"private": True},
+        "resource": {"format": "pdf"},
     })
