@@ -7,7 +7,6 @@ groups:
         description: |
           Space-separated list of resource formats (matched case-insensitively)
           that the Office previewer will offer to render.
-        type: str
 
       - key: ckanext.officedocs.enable_private_fallback
         default: false
@@ -23,4 +22,3 @@ groups:
         description: |
           CSS height of the Office viewer iframe used for public resources
           (e.g. "400px", "60vh").
-        type: str
