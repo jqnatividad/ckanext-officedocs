@@ -7,10 +7,23 @@ IResourceView
 
 ## Supported formats
 
-This plugin will attempt to preview the following formats
+By default, this plugin will attempt to preview the following formats:
 
 > \"DOC\", \"DOCX\", \"XLS\", \"XLSX\", \"XLSB\", \"PPT\", \"PPTX\", \"PPS\",
 > \"PPSX\", \"ODT\", \"ODS\", \"ODP\"
+
+The supported formats can be configured in your CKAN configuration file:
+
+```ini
+ckanext.officedocs.supported_formats = DOC DOCX XLS XLSX XLSB PPT PPTX PPS PPSX ODT ODS ODP
+```
+
+Formats are separated by spaces and matched case-insensitively. For example,
+to add macro-enabled Microsoft Office formats:
+
+```ini
+ckanext.officedocs.supported_formats = DOC DOCX DOCM XLS XLSX XLSM XLSB PPT PPTX PPTM PPS PPSX PPSM ODT ODS ODP
+```
 
 ## Installation
 
