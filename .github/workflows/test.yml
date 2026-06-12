@@ -24,6 +24,9 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ckan/ckan-dev:${{ matrix.ckan-version }}
+      # Run as root so actions/checkout can write to the runner's file-command
+      # dir; the ckan-dev:2.11 image otherwise runs as a non-root user (EACCES).
+      options: --user root
     services:
       solr:
         image: ckan/ckan-solr:${{ matrix.ckan-version }}-solr9
