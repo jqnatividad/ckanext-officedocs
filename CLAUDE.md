@@ -6,8 +6,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 `ckanext-officedocs` is a CKAN extension that registers an `IResourceView` plugin
 (`officedocs_view`). It renders MS Office and OpenOffice documents in the browser by
-embedding the [Microsoft Office Web Viewer](https://view.officeapps.live.com/op/view.aspx)
-in an iframe. It has no runtime dependencies of its own — it relies entirely on CKAN's
+embedding the Microsoft Office Web Viewer's embed address
+(`https://view.officeapps.live.com/op/embed.aspx?src=`) in an iframe, lazily loaded, with
+`referrerpolicy="strict-origin-when-cross-origin"`. It has no runtime dependencies of its own — it relies entirely on CKAN's
 plugin toolkit and Microsoft's hosted viewer service.
 
 ## Architecture

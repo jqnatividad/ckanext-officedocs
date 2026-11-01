@@ -23,6 +23,12 @@ ckanext-webpageviewplus never gives one to an embedded page until uploads are se
 separate domain. On sites without one, keep using this extension, which embeds the viewer
 without a sandbox. Both refuse files in private datasets, which Microsoft can't fetch.
 
+## Privacy
+
+Each preview loads Microsoft's viewer in the visitor's browser and gives Microsoft the
+document's address, from which Microsoft's servers fetch the document. The viewer loads only
+when scrolled into view, and is sent no more of your page's address than its origin.
+
 ## Supported formats
 
 By default, this plugin will attempt to preview the following formats:
