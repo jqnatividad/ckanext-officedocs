@@ -5,6 +5,24 @@ Viewer](https://www.microsoft.com/en-us/microsoft-365/blog/2013/04/10/office-web
 for previewing both MS Office and OpenOffice documents as an
 IResourceView
 
+## Also consider ckanext-webpageviewplus
+
+[ckanext-webpageviewplus](https://github.com/dathere/ckanext-webpageviewplus) (from version
+0.7.0) shows Word, Excel and PowerPoint files through the same Microsoft viewer, as one of the
+well-known services in its "Website (Plus)" view, and adds what this extension doesn't:
+
+- a security setting per view, so the embedded viewer can't act as your CKAN site;
+- a consent card, so visitors can choose before anything loads from Microsoft (each preview
+  sends the visitor to Microsoft and gives Microsoft the file's address);
+- a height that fits (16:9 for slides), a control bar with Open in new tab, Fullscreen (Expand
+  on iPhone) and Share, lazy loading, and accessibility work;
+- `ckan webpageviewplus check-views`, which lists views whose page has gone.
+
+It needs a separate domain for uploads: Microsoft's viewer only works with its own origin, and
+ckanext-webpageviewplus never gives one to an embedded page until uploads are served from a
+separate domain. On sites without one, keep using this extension, which embeds the viewer
+without a sandbox. Both refuse files in private datasets, which Microsoft can't fetch.
+
 ## Supported formats
 
 By default, this plugin will attempt to preview the following formats:
